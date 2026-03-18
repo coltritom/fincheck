@@ -44,7 +44,7 @@ function RadarChart({ dsc, sv, sz }: { dsc: Record<string, number>; sv: boolean;
   const axes = [];
   for (let k = 0; k < n; k++) { const aa = -Math.PI / 2 + k * step; axes.push(<line key={k} x1={cx} y1={cy} x2={cx + rd * Math.cos(aa)} y2={cy + rd * Math.sin(aa)} stroke={C.bd} strokeWidth="1" />); }
   const pp = pts.map(function (pt) { return pt.x + "," + pt.y; }).join(" ");
-  const dots: JSX.Element[] = [];
+  const dots: React.ReactElement[] = [];
   for (let m = 0; m < pts.length; m++) {
     const pt = pts[m];
     dots.push(<circle key={"c" + m} cx={pt.x} cy={pt.y} r="4" fill={C.cy} />);
