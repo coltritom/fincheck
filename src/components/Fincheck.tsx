@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { C, QUESTIONS, DIMS, ACTION_PLANS, STANDARDS, UPSELL_FEATURES, CHECKOUT_FEATURES } from "@/lib/data";
 import { calcScores, getInterpretation, getPriorityAction, getAlertExplanation, getUrgencyLabel } from "@/lib/scoring";
 import type { ScoreResult } from "@/lib/scoring";
+import { saveDiagnostico } from "@/lib/actions";
 import ContactModal from "./ContactModal";
 
 // ═══ SMALL UI COMPONENTS ═══
@@ -104,6 +105,7 @@ export default function Fincheck() {
   const [em, setEm] = useState("");
   const [fd, setFd] = useState(true);
   const [modal, setModal] = useState(false);
+  const [diagId, setDiagId] = useState<string | null>(null);
   const tr = useRef<HTMLDivElement>(null);
 
   function go(s: number) { setFd(false); setTimeout(function () { setSc(s); setFd(true); }, 200); }
@@ -136,6 +138,19 @@ export default function Fincheck() {
 
   function renderFooter() {
     return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>Fincheck es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
+  }
+
+function handleSubmitDiagnostico() {
+    const r = calcScores(ans);
+    setRes(r);
+    console.log("Intentando guardar diagnóstico...");
+    saveDiagnostico(nm, em, ans, r).then(function (id) {
+      console.log("Resultado de guardado:", id);
+      if (id) setDiagId(id);
+    }).catch(function (err) {
+      console.error("Error en saveDiagnostico:", err);
+    });
+    go(3);
   }
 
   // ════════════════════════════
@@ -221,7 +236,7 @@ export default function Fincheck() {
     return (
       <div style={wrapStyle} ref={tr}>
         <GlowOrb c={C.mg} sz={250} t="50px" le="300px" op={0.12} />
-        <div style={{ padding: "16px 24px", borderBottom: "1px solid " + C.bd, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 1 }}>{renderLogo()}</div>
+        <button style={{ ...btnPrimary, opacity: ok ? 1 : 0.4 }} onClick={function () { if (ok) handleSubmitDiagnostico(); }}>Ver mi diagnóstico →</button>
         <div style={{ padding: "48px 24px", position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center", marginBottom: 36 }}>
             <div style={{ width: 64, height: 64, borderRadius: 20, background: "linear-gradient(135deg," + C.cyg + "," + C.mgg + ")", border: "1px solid " + C.cyd, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={C.cy} strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg></div>
@@ -230,7 +245,7 @@ export default function Fincheck() {
           </div>
           <div style={{ marginBottom: 16 }}><label style={{ fontSize: 12, fontWeight: 600, color: C.ml, display: "block", marginBottom: 6 }}>Nombre</label><input value={nm} onChange={function (e) { setNm(e.target.value); }} placeholder="Tu nombre" style={{ width: "100%", padding: "14px 16px", borderRadius: 10, border: "1.5px solid " + C.bd, fontSize: 15, outline: "none", boxSizing: "border-box", background: C.sf, color: C.ic }} /></div>
           <div style={{ marginBottom: 24 }}><label style={{ fontSize: 12, fontWeight: 600, color: C.ml, display: "block", marginBottom: 6 }}>Email</label><input value={em} onChange={function (e) { setEm(e.target.value); }} placeholder="tu@email.com" type="email" style={{ width: "100%", padding: "14px 16px", borderRadius: 10, border: "1.5px solid " + C.bd, fontSize: 15, outline: "none", boxSizing: "border-box", background: C.sf, color: C.ic }} /></div>
-          <button style={{ ...btnPrimary, opacity: ok ? 1 : 0.4 }} onClick={function () { if (ok) { setRes(calcScores(ans)); go(3); } }}>Ver mi diagnóstico →</button>
+          <button style={{ ...btnPrimary, opacity: ok ? 1 : 0.4 }} onClick={function () { if (ok) handleSubmitDiagnostico(); }}>Ver mi diagnóstico →</button>
           <p style={{ fontSize: 11, color: C.mu, textAlign: "center", marginTop: 14 }}>Tus datos son confidenciales.</p>
         </div>
       </div>
@@ -244,7 +259,7 @@ export default function Fincheck() {
     const ds = res.ds;
     return (
       <div style={wrapStyle} ref={tr}>
-        <ContactModal show={modal} onClose={function () { setModal(false); }} prefillName={nm} prefillEmail={em} result={res} />
+        <ContactModal show={modal} onClose={function () { setModal(false); }} prefillName={nm} prefillEmail={em} result={res} diagnosticoId={diagId} />
         <GlowOrb c={res.co} sz={300} t="-80px" le="100px" op={0.12} />
         <div style={{ padding: "16px 24px", borderBottom: "1px solid " + C.bd, display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 1 }}>
           {renderLogo("Tu Diagnóstico")}
@@ -310,7 +325,7 @@ export default function Fincheck() {
     const dso = DIMS.slice().sort(function (a, b) { return res.ds[a.k] - res.ds[b.k]; });
     return (
       <div style={wrapStyle} ref={tr}>
-        <ContactModal show={modal} onClose={function () { setModal(false); }} prefillName={nm} prefillEmail={em} result={res} />
+        <ContactModal show={modal} onClose={function () { setModal(false); }} prefillName={nm} prefillEmail={em} result={res} diagnosticoId={diagId} />
         <GlowOrb c={C.cy} sz={250} t="-50px" le="-40px" op={0.12} /><GlowOrb c={C.mg} sz={200} t="500px" le="300px" op={0.1} />
         <div style={{ padding: "16px 24px", borderBottom: "1px solid " + C.bd, display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 1 }}>
           {renderLogo("Reporte Premium")}

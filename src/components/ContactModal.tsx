@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { C, RUBROS, EMPLEADOS, FACTURACION, MOTIVOS, URGENCIAS } from "@/lib/data";
 import type { ScoreResult } from "@/lib/scoring";
+import { saveLeadConsultoria } from "@/lib/actions";
 
 interface ContactModalProps {
   show: boolean;
@@ -10,6 +11,7 @@ interface ContactModalProps {
   prefillName: string;
   prefillEmail: string;
   result: ScoreResult | null;
+  diagnosticoId: string | null;
 }
 
 interface FormData {
@@ -42,7 +44,7 @@ function XIcon() {
   );
 }
 
-export default function ContactModal({ show, onClose, prefillName, prefillEmail, result }: ContactModalProps) {
+export default function ContactModal({ show, onClose, prefillName, prefillEmail, result, diagnosticoId }: ContactModalProps) {
   const [f, setF] = useState<FormData>({
     nombre: prefillName, email: prefillEmail, whatsapp: "", empresa: "",
     rubro: "", empleados: "", facturacion: "", motivo: "", detalle: "", urgencia: "",
@@ -89,7 +91,7 @@ export default function ContactModal({ show, onClose, prefillName, prefillEmail,
       source: "cta_consultoria_diagnostico",
     };
     // TODO: Send to Supabase
-    console.log("LEAD DATA:", f, hidden);
+    saveLeadConsultoria(f, result, diagnosticoId).then(function(ok) { if (!ok) console.error("Error guardando lead"); });
     setSent(true);
   }
 
