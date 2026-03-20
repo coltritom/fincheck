@@ -6,6 +6,7 @@ import { calcScores, getInterpretation, getPriorityAction, getAlertExplanation, 
 import type { ScoreResult } from "@/lib/scoring";
 import { saveDiagnostico } from "@/lib/actions";
 import ContactModal from "./ContactModal";
+import { sendEmail } from "@/lib/email";
 
 // ═══ SMALL UI COMPONENTS ═══
 
@@ -140,7 +141,7 @@ export default function Fincheck() {
     return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>Fincheck es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
   }
 
-function handleSubmitDiagnostico() {
+  function handleSubmitDiagnostico() {
     const r = calcScores(ans);
     setRes(r);
     console.log("Intentando guardar diagnóstico...");
@@ -149,6 +150,9 @@ function handleSubmitDiagnostico() {
       if (id) setDiagId(id);
     }).catch(function (err) {
       console.error("Error en saveDiagnostico:", err);
+    });
+    sendEmail("resultado_gratis", em, nm, r.fin, r.rg, r.lb, r.al, r.co).then(function (ok) {
+      console.log("Email enviado:", ok);
     });
     go(3);
   }
