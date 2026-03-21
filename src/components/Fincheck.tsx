@@ -295,7 +295,7 @@ export default function Fincheck() {
         <ContactModal show={modal} onClose={function () { setModal(false); }} prefillName={nm} prefillEmail={em} result={res} diagnosticoId={diagId} />
         <GlowOrb c={res.co} sz={300} t="-80px" le="100px" op={0.12} />
         <div style={{ padding: "16px 24px", borderBottom: "1px solid " + C.bd, display: "flex", justifyContent: "space-between", alignItems: "center", position: "relative", zIndex: 1 }}>
-          {renderLogo("Tu Diagnóstico")}
+          {renderLogo("fincheq")}
           <span style={{ display: "inline-block", background: res.co + "20", color: res.co, fontSize: 11, fontWeight: 700, padding: "4px 12px", borderRadius: 20 }}>{res.lb}</span>
         </div>
         <div style={{ padding: "32px 24px", position: "relative", zIndex: 1 }}>

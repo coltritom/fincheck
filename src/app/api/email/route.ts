@@ -152,8 +152,6 @@ function wrap(content: string): string {
 
 function buildEmailGratis(nombre: string, score: number, rango: string, label: string, alertas: string[], dimScores: Record<string, number> | null, diagId: string | null): string {
   var c = getColor(rango);
-  var interp = getInterpretation(rango);
-  var action = getPriorityAction(dimScores);
   var link = makeLink(diagId);
 
   var html = ''
@@ -161,48 +159,40 @@ function buildEmailGratis(nombre: string, score: number, rango: string, label: s
     + '<div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#008efe,#fe26fe);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px;">'
     + '<span style="color:#fff;font-size:20px;font-weight:800;">F</span></div>'
     + '<h1 style="font-size:24px;font-weight:800;color:#cbfaff;margin:0 0 6px;">Tu Diagn\u00f3stico Financiero</h1>'
-    + '<p style="font-size:14px;color:#6B7194;margin:0;">Hola ' + nombre + ', ac\u00e1 est\u00e1n los resultados</p>'
+    + '<p style="font-size:14px;color:#6B7194;margin:0;">Hola ' + nombre + '</p>'
     + '</div>';
 
-  html += '<div style="background:#0C0C14;border:1px solid #1A1A2E;border-radius:16px;padding:32px;text-align:center;margin-bottom:24px;">'
-    + '<p style="font-size:56px;font-weight:800;color:' + c + ';margin:0;line-height:1;">' + score + '</p>'
-    + '<p style="font-size:15px;color:#6B7194;margin:4px 0 14px;">/100</p>'
-    + '<span style="display:inline-block;background:' + c + '20;color:' + c + ';font-size:14px;font-weight:700;padding:8px 20px;border-radius:24px;">' + label + '</span></div>';
+  // Score compact
+  html += '<div style="background:#0C0C14;border:1px solid #1A1A2E;border-radius:16px;padding:24px;text-align:center;margin-bottom:24px;">'
+    + '<span style="display:inline-block;background:' + c + ';color:#fff;font-size:16px;font-weight:700;padding:6px 20px;border-radius:24px;margin-bottom:12px;">' + label.toUpperCase() + '</span>'
+    + '<p style="font-size:48px;font-weight:800;color:' + c + ';margin:0;line-height:1;">' + score + '<span style="font-size:18px;color:#6B7194;">/100</span></p>'
+    + '</div>';
 
-  html += '<div style="background:#0C0C14;border:1px solid #1A1A2E;border-radius:14px;padding:22px;margin-bottom:24px;">'
-    + '<p style="font-size:15px;font-weight:700;color:#cbfaff;margin:0 0 10px;">Tu negocio: ' + label + '</p>'
-    + '<p style="font-size:14px;color:#8890B0;margin:0;line-height:1.65;">' + interp + '</p></div>';
-
+  // Alerts (brief)
   if (alertas && alertas.length > 0) {
-    html += '<div style="background:#FF4D6A12;border:1px solid #FF4D6A25;border-radius:14px;padding:22px;margin-bottom:24px;">'
-      + '<p style="font-size:14px;font-weight:700;color:#FF4D6A;margin:0 0 14px;">Alertas cr\u00edticas detectadas</p>';
+    html += '<div style="background:#FF4D6A12;border:1px solid #FF4D6A25;border-radius:14px;padding:18px;margin-bottom:24px;">';
     for (var i = 0; i < alertas.length; i++) {
-      html += '<p style="font-size:13px;color:#FF4D6A;margin:0 0 ' + (i < alertas.length - 1 ? '8' : '0') + 'px;line-height:1.55;">\u2022 ' + alertas[i] + '</p>';
+      html += '<p style="font-size:13px;color:#FF4D6A;margin:0 0 ' + (i < alertas.length - 1 ? '6' : '0') + 'px;line-height:1.5;">\u26A0\uFE0F ' + alertas[i] + '</p>';
     }
     html += '</div>';
   }
 
-  // Brief importance text
+  // Motivational message (not repeated in PDF)
   html += '<div style="background:#0C0C14;border:1px solid #1A1A2E;border-radius:14px;padding:22px;margin-bottom:24px;">'
-    + '<p style="font-size:11px;font-weight:700;color:#008efe;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.06em;">Por qu\u00e9 importa cada dimensi\u00f3n</p>'
-    + '<p style="font-size:13px;color:#8890B0;margin:0 0 16px;line-height:1.6;">Evaluamos 7 variables clave de tu negocio. Encontr\u00e1 el detalle completo de cada una en el PDF adjunto a este email.</p>'
+    + '<p style="font-size:14px;color:#8890B0;margin:0 0 12px;line-height:1.65;">La mayor\u00eda de los negocios que cierran no lo hacen por falta de ventas, sino por problemas financieros que se acumulan en silencio: flujo de caja insuficiente, m\u00e1rgenes que se erosionan, deudas que crecen m\u00e1s r\u00e1pido que los ingresos.</p>'
+    + '<p style="font-size:14px;color:#8890B0;margin:0 0 12px;line-height:1.65;">Lo importante no es el n\u00famero en s\u00ed, sino lo que hac\u00e9s con \u00e9l. Un diagn\u00f3stico es el primer paso. Actuar es el segundo.</p>'
+    + '<p style="font-size:14px;font-weight:700;color:#cbfaff;margin:0;line-height:1.65;">\uD83D\uDCCE Adjuntamos tu diagn\u00f3stico completo en PDF con el detalle de las 7 dimensiones evaluadas y tu acci\u00f3n prioritaria para esta semana.</p>'
     + '</div>';
 
-  html += '<div style="background:#0C0C14;border:1px solid #1A1A2E;border-radius:14px;padding:22px;margin-bottom:28px;border-left:3px solid #008efe;">'
-    + '<p style="font-size:11px;font-weight:700;color:#008efe;margin:0 0 10px;text-transform:uppercase;letter-spacing:0.06em;">Tu acci\u00f3n prioritaria esta semana</p>'
-    + '<p style="font-size:14px;color:#8890B0;margin:0;line-height:1.65;">' + action + '</p></div>';
-
+  // Upsell CTA
   html += '<div style="background:linear-gradient(145deg,#0C0C14,#0A0A18);border:1px solid #008efe40;border-radius:16px;padding:28px;text-align:center;">'
-    + '<p style="font-size:10px;font-weight:700;color:#fe26fe;margin:0 0 10px;text-transform:uppercase;letter-spacing:0.12em;">Reporte Premium</p>'
-    + '<p style="font-size:18px;font-weight:800;color:#cbfaff;margin:0 0 12px;line-height:1.3;">Quer\u00e9s saber exactamente qu\u00e9 hacer y en qu\u00e9 orden?</p>'
-    + '<p style="font-size:13px;color:#cbfaff;margin:0 0 4px;">\u2713 Scores exactos por dimensi\u00f3n</p>'
-    + '<p style="font-size:13px;color:#cbfaff;margin:0 0 4px;">\u2713 Orden de prioridad 1-2-3</p>'
-    + '<p style="font-size:13px;color:#cbfaff;margin:0 0 4px;">\u2713 Plan de acci\u00f3n a 7, 30 y 90 d\u00edas</p>'
-    + '<p style="font-size:13px;color:#cbfaff;margin:0 0 4px;">\u2713 Checklist de implementaci\u00f3n</p>'
-    + '<p style="font-size:13px;color:#cbfaff;margin:0 0 20px;">\u2713 3 plantillas accionables</p>'
-    + '<p style="font-size:30px;font-weight:800;color:#cbfaff;margin:0 0 4px;">USD 9.99</p>'
+    + '<p style="font-size:10px;font-weight:700;color:#fe26fe;margin:0 0 10px;text-transform:uppercase;letter-spacing:0.12em;">Siguiente paso</p>'
+    + '<p style="font-size:18px;font-weight:800;color:#cbfaff;margin:0 0 14px;line-height:1.3;">Quer\u00e9s saber exactamente qu\u00e9 hacer y en qu\u00e9 orden?</p>'
+    + '<p style="font-size:13px;color:#8890B0;margin:0 0 16px;line-height:1.55;">Tu Reporte Premium incluye scores exactos, orden de prioridad, plan de acci\u00f3n a 7/30/90 d\u00edas, checklist y plantillas accionables.</p>'
+    + '<p style="font-size:28px;font-weight:800;color:#cbfaff;margin:0 0 4px;">USD 9.99</p>'
     + '<p style="font-size:12px;color:#6B7194;margin:0 0 20px;">Pago \u00fanico \u2014 Acceso inmediato</p>'
-    + '<a href="' + link + '" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi reporte completo \u2192</a></div>';
+    + '<a href="' + link + '" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi reporte completo \u2192</a>'
+    + '</div>';
 
   return wrap(html);
 }
