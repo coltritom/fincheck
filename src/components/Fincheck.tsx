@@ -109,9 +109,10 @@ export default function Fincheck() {
   const [diagId, setDiagId] = useState<string | null>(null);
   const tr = useRef<HTMLDivElement>(null);
 
-useEffect(function () {
+  useEffect(function () {
     var params = new URLSearchParams(window.location.search);
     var diagParam = params.get("diag");
+    var pagoParam = params.get("pago");
     if (diagParam) {
       loadDiagnostico(diagParam).then(function (data) {
         if (data) {
@@ -133,7 +134,7 @@ useEffect(function () {
             lb: rangoLabels[data.rango] || data.rango,
           };
           setRes(result);
-          if (data.compro_premium) {
+          if (pagoParam === "ok" || data.compro_premium) {
             setSc(5);
           } else {
             setSc(3);
