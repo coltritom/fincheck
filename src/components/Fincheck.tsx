@@ -170,9 +170,9 @@ useEffect(function () {
 
   function renderLogo(text?: string) {
     return (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }} onClick={function () { go(0); setCq(0); setAns({}); setRes(null); setDiagId(null); }}>
         <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", display: "flex", alignItems: "center", justifyContent: "center" }}><PulseIcon /></div>
-        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "fincheq"}</span>
+        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "Fincheq"}</span>
       </div>
     );
   }
