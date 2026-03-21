@@ -6,14 +6,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { tipo, destinatario, nombre, score, rango, label, alertas, dimScores } = body;
+    const { tipo, destinatario, nombre, score, rango, label, alertas, dimScores, diagId } = body;
 
     let subject = "";
     let html = "";
 
     if (tipo === "resultado_gratis") {
       subject = nombre + ", tu diagnóstico financiero: " + score + "/100";
-      html = buildEmailGratis(nombre, score, rango, label, alertas, dimScores);
+      html = buildEmailGratis(nombre, score, rango, label, alertas, dimScores, diagId);
     } else if (tipo === "resultado_premium") {
       subject = nombre + ", tu Reporte Premium está disponible";
       html = buildEmailPremium(nombre, score, label);
@@ -92,14 +92,14 @@ function wrap(content: string): string {
     + content
     + '<div style="border-top:1px solid #1A1A2E;padding-top:24px;margin-top:36px;text-align:center;">'
     + '<p style="font-size:11px;color:#6B7194;margin:0;">Fincheq es una herramienta de <strong style="color:#cbfaff;">SECRITO Consulting</strong></p>'
-    + '<p style="font-size:11px;color:#6B7194;margin:6px 0 0;"><a href="https://fincheq.pro" style="color:#008efe;text-decoration:none;">fincheq.pro</a> — Diagnóstico financiero para pymes</p>'
+    + '<p style="font-size:11px;color:#6B7194;margin:6px 0 0;"><a href="https://fincheq.pro' + (diagId ? '?diag=' + diagId : '') + '" style="color:#008efe;text-decoration:none;">fincheq.pro</a> — Diagnóstico financiero para pymes</p>'
     + '</div>'
     + '</div></body></html>';
 }
 
 // ═══ EMAIL: RESULTADO GRATUITO ═══
 
-function buildEmailGratis(nombre: string, score: number, rango: string, label: string, alertas: string[], dimScores: Record<string, number> | null): string {
+function buildEmailGratis(nombre: string, score: number, rango: string, label: string, alertas: string[], dimScores: Record<string, number> | null, diagId: string | null): string {
   const c = getColor(rango);
   const interp = getInterpretation(rango);
   const action = getPriorityAction(dimScores);
@@ -162,9 +162,9 @@ function buildEmailGratis(nombre: string, score: number, rango: string, label: s
     const ds = dimScores ? getDimStatus(val) : "—";
 
     html += '<div style="padding:12px 0;border-bottom:' + (i < dimInfo.length - 1 ? '1px solid #1A1A2E' : 'none') + ';">'
-      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">'
+      + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:20px;">'
       + '<span style="font-size:13px;font-weight:700;color:#cbfaff;">' + d.l + '</span>'
-      + '<span style="font-size:12px;font-weight:700;color:' + dc + ';">' + ds + '</span>'
+      + '<span style="font-size:12px;font-weight:700;color:' + dc + ';white-space:nowrap;padding-left:16px;">' + ds + '</span>'
       + '</div>'
       + '<p style="font-size:12px;color:#6B7194;margin:0;line-height:1.5;">' + d.why + '</p>'
       + '</div>';
@@ -193,7 +193,7 @@ function buildEmailGratis(nombre: string, score: number, rango: string, label: s
     + '<p style="font-size:13px;color:#cbfaff;margin:0 0 20px;">✓ 3 plantillas accionables</p>'
     + '<p style="font-size:30px;font-weight:800;color:#cbfaff;margin:0 0 4px;">USD 9.99</p>'
     + '<p style="font-size:12px;color:#6B7194;margin:0 0 20px;">Pago único — Acceso inmediato</p>'
-    + '<a href="https://fincheq.pro" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi reporte completo →</a>'
+    + '<a href="https://fincheq.pro' + (diagId ? '?diag=' + diagId : '') + '" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi reporte completo →</a>'
     + '</div>';
 
   return wrap(html);
@@ -217,7 +217,7 @@ function buildEmailPremium(nombre: string, score: number, label: string): string
     + '<p style="font-size:14px;color:#cbfaff;margin:0;">✓ 3 plantillas accionables para usar esta semana</p>'
     + '</div>'
     + '<div style="text-align:center;">'
-    + '<a href="https://fincheq.pro" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi Reporte Premium →</a>'
+    + '<a href="https://fincheq.pro' + (diagId ? '?diag=' + diagId : '') + '" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Acceder a mi Reporte Premium →</a>'
     + '<p style="font-size:12px;color:#6B7194;margin:14px 0 0;">Tu reporte está disponible en cualquier momento desde fincheq.pro</p>'
     + '</div>'
   );
@@ -238,7 +238,7 @@ function buildEmailFollowup(nombre: string, score: number, label: string): strin
     + '<p style="font-size:14px;color:#8890B0;margin:0;line-height:1.65;">Tu reporte premium con el plan de acción completo, prioridades y plantillas sigue disponible.</p>'
     + '</div>'
     + '<div style="text-align:center;">'
-    + '<a href="https://fincheq.pro" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Ver mi plan de acción — USD 9.99 →</a>'
+    + '<a href="https://fincheq.pro' + (diagId ? '?diag=' + diagId : '') + '" style="display:inline-block;background:linear-gradient(135deg,#008efe,#fe26fe);color:#fff;text-decoration:none;padding:14px 40px;border-radius:12px;font-size:15px;font-weight:700;">Ver mi plan de acción — USD 9.99 →</a>'
     + '</div>'
   );
 }
