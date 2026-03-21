@@ -141,18 +141,20 @@ export default function Fincheck() {
     return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>fincheq es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
   }
 
-  function handleSubmitDiagnostico() {
+    function handleSubmitDiagnostico() {
     const r = calcScores(ans);
     setRes(r);
     console.log("Intentando guardar diagnóstico...");
     saveDiagnostico(nm, em, ans, r).then(function (id) {
       console.log("Resultado de guardado:", id);
-      if (id) setDiagId(id);
+      if (id) {
+        setDiagId(id);
+        sendEmail("resultado_gratis", em, nm, r.fin, r.rg, r.lb, r.al, r.co, r.ds, id).then(function (ok) {
+          console.log("Email enviado:", ok);
+        });
+      }
     }).catch(function (err) {
       console.error("Error en saveDiagnostico:", err);
-    });
-    sendEmail("resultado_gratis", em, nm, r.fin, r.rg, r.lb, r.al, r.co, r.ds).then(function (ok) {
-      console.log("Email enviado:", ok);
     });
     go(3);
   }
