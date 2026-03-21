@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     var pdfBytes: ArrayBuffer;
     var filename: string;
 
-    if (tipo === "premium" && data.compro_premium) {
+    if (tipo === "premium") {
       pdfBytes = generatePremiumPdf(pdfData);
       filename = "Fincheq-ReportePremium-" + data.nombre.replace(/\s+/g, "-") + ".pdf";
     } else {
