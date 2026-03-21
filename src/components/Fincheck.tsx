@@ -151,7 +151,7 @@ export default function Fincheck() {
     }).catch(function (err) {
       console.error("Error en saveDiagnostico:", err);
     });
-    sendEmail("resultado_gratis", em, nm, r.fin, r.rg, r.lb, r.al, r.co).then(function (ok) {
+    sendEmail("resultado_gratis", em, nm, r.fin, r.rg, r.lb, r.al, r.co, r.ds).then(function (ok) {
       console.log("Email enviado:", ok);
     });
     go(3);
@@ -209,7 +209,7 @@ export default function Fincheck() {
         </div>
         <div style={{ background: "linear-gradient(135deg," + C.cyg + "," + C.mgg + ")", borderRadius: 16, padding: 24, border: "1px solid " + C.cyd, marginBottom: 16 }}>
           <p style={{ fontSize: 14, fontWeight: 700, color: C.ic, margin: "0 0 6px" }}>Un diagnóstico serio, no un quiz de internet</p>
-          <p style={{ fontSize: 13, color: C.ml, margin: 0, lineHeight: 1.6 }}>Basado en indicadores financieros reales. Diseñado por consultores especializados en pymes.</p>
+          <p style={{ fontSize: 13, color: C.ml, margin: 0, lineHeight: 1.6 }}>Basado en indicadores financieros reales. Diseñado por consultores especializados en PyMES.</p>
         </div>
       </div>
       {renderFooter()}
@@ -261,7 +261,7 @@ export default function Fincheck() {
     return (
       <div style={wrapStyle} ref={tr}>
         <GlowOrb c={C.mg} sz={250} t="50px" le="300px" op={0.12} />
-        <button style={{ ...btnPrimary, opacity: ok ? 1 : 0.4 }} onClick={function () { if (ok) handleSubmitDiagnostico(); }}>Ver mi diagnóstico →</button>
+        <div style={{ padding: "16px 24px", borderBottom: "1px solid " + C.bd, display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 1 }}>{renderLogo()}</div>
         <div style={{ padding: "48px 24px", position: "relative", zIndex: 1 }}>
           <div style={{ textAlign: "center", marginBottom: 36 }}>
             <div style={{ width: 64, height: 64, borderRadius: 20, background: "linear-gradient(135deg," + C.cyg + "," + C.mgg + ")", border: "1px solid " + C.cyd, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={C.cy} strokeWidth="2" strokeLinecap="round"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" /></svg></div>
