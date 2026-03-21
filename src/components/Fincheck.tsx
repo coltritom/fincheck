@@ -209,7 +209,13 @@ export default function Fincheck() {
         </div>
         <div style={{ background: "linear-gradient(135deg," + C.cyg + "," + C.mgg + ")", borderRadius: 16, padding: 24, border: "1px solid " + C.cyd, marginBottom: 16 }}>
           <p style={{ fontSize: 14, fontWeight: 700, color: C.ic, margin: "0 0 6px" }}>Un diagnóstico serio, no un quiz de internet</p>
-          <p style={{ fontSize: 13, color: C.ml, margin: 0, lineHeight: 1.6 }}>Basado en indicadores financieros reales. Diseñado por consultores especializados en PyMES.</p>
+          <p style={{ fontSize: 13, color: C.ml, margin: 0, lineHeight: 1.6 }}>Basado en indicadores financieros reales. Diseñado por consultores especializados en pymes.</p>
+        </div>
+        <div style={cardStyle}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: C.cy, margin: "0 0 16px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Por qué confiar en Fincheq</p>
+          {["Basado en 7 indicadores financieros reales: liquidez, rentabilidad, cobranzas, endeudamiento, precios, orden y concentración", "Incluye sistema de alertas críticas con penalizaciones para que ningún problema grave quede oculto", "Desarrollado por SECRITO Consulting, consultora especializada en gestión financiera de pymes", "Tus datos son confidenciales y no se comparten con terceros"].map(function (t, i) {
+            return <div key={i} style={{ display: "flex", gap: 10, marginBottom: i < 3 ? 14 : 0 }}><div style={{ minWidth: 20, height: 20, borderRadius: 6, background: C.cyg, border: "1px solid " + C.cyd, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}><CheckIcon c={C.cy} sz={11} /></div><span style={{ fontSize: 13, color: C.ml, lineHeight: 1.55 }}>{t}</span></div>;
+          })}
         </div>
       </div>
       {renderFooter()}
