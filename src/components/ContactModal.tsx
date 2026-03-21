@@ -83,15 +83,9 @@ export default function ContactModal({ show, onClose, prefillName, prefillEmail,
 
   function submit() {
     if (!validate()) return;
-    const hidden = {
-      score_total: result ? result.fin : null,
-      resultado_rango: result ? result.rg : null,
-      alertas_principales: result ? result.al.join(" | ") : null,
-      fecha_de_envio: new Date().toISOString(),
-      source: "cta_consultoria_diagnostico",
-    };
-    // TODO: Send to Supabase
-    saveLeadConsultoria(f, result, diagnosticoId).then(function(ok) { if (!ok) console.error("Error guardando lead"); });
+    saveLeadConsultoria(f, result, diagnosticoId).then(function (ok) {
+      if (!ok) console.error("Error guardando lead");
+    });
     setSent(true);
   }
 

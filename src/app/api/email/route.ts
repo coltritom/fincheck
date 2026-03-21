@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Fincheck <onboarding@resend.dev>",
+      from: "Fincheq <onboarding@resend.dev>",
       to: [destinatario],
       subject: subject,
       html: html,
@@ -52,7 +52,7 @@ function getColor(rango: string): string {
 }
 
 function wrap(content: string): string {
-  return '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#050509;font-family:system-ui,sans-serif;"><div style="max-width:520px;margin:0 auto;padding:32px 24px;">' + content + '<div style="border-top:1px solid #1A1A2E;padding-top:20px;margin-top:32px;text-align:center;"><p style="font-size:11px;color:#6B7194;margin:0;">Fincheck — SECRITO Consulting</p></div></div></body></html>';
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#050509;font-family:system-ui,sans-serif;"><div style="max-width:520px;margin:0 auto;padding:32px 24px;">' + content + '<div style="border-top:1px solid #1A1A2E;padding-top:20px;margin-top:32px;text-align:center;"><p style="font-size:11px;color:#6B7194;margin:0;">Fincheq — SECRITO Consulting</p></div></div></body></html>';
 }
 
 function buildEmailGratis(nombre: string, score: number, rango: string, label: string, alertas: string[]): string {

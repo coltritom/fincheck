@@ -97,7 +97,7 @@ function DimBar({ l, v, sh }: { l: string; v: number; sh: boolean }) {
 
 // ═══ MAIN APP ═══
 
-export default function Fincheck() {
+export default function Fincheq() {
   const [sc, setSc] = useState(0);
   const [cq, setCq] = useState(0);
   const [ans, setAns] = useState<Record<number, number>>({});
@@ -132,13 +132,13 @@ export default function Fincheck() {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", display: "flex", alignItems: "center", justifyContent: "center" }}><PulseIcon /></div>
-        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "Fincheck"}</span>
+        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "Fincheq"}</span>
       </div>
     );
   }
 
   function renderFooter() {
-    return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>Fincheck es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
+    return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>Fincheq es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
   }
 
   function handleSubmitDiagnostico() {
@@ -334,7 +334,7 @@ export default function Fincheck() {
       <div style={{ padding: "40px 24px", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}><h2 style={{ fontSize: 24, fontWeight: 800, color: C.ic, margin: "0 0 8px" }}>Completá tu compra</h2><p style={{ fontSize: 15, color: C.mu, margin: 0 }}>Reporte Premium — Pago único</p></div>
         <div style={{ background: C.sf, borderRadius: 16, padding: 24, border: "1px solid " + C.cyd }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid " + C.bd }}><div><p style={{ fontSize: 15, fontWeight: 700, color: C.ic, margin: 0 }}>Reporte Premium</p><p style={{ fontSize: 13, color: C.mu, margin: "2px 0 0" }}>Fincheck</p></div><span style={{ fontSize: 24, fontWeight: 800, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>USD 9.99</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid " + C.bd }}><div><p style={{ fontSize: 15, fontWeight: 700, color: C.ic, margin: 0 }}>Reporte Premium</p><p style={{ fontSize: 13, color: C.mu, margin: "2px 0 0" }}>Fincheq</p></div><span style={{ fontSize: 24, fontWeight: 800, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>USD 9.99</span></div>
           <div style={{ fontSize: 13, color: C.mu, lineHeight: 1.7, marginBottom: 20 }}>{CHECKOUT_FEATURES.map(function (t, i) { return <p key={i} style={{ margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}><CheckIcon c={C.gn} sz={14} />{t}</p>; })}</div>
           <div style={{ padding: 20, background: C.sl, borderRadius: 12, textAlign: "center", marginBottom: 16, border: "1px solid " + C.bd }}><div style={{ display: "inline-flex", padding: "8px 20px", borderRadius: 8, background: "#009EE3" }}><span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>MercadoPago</span></div><p style={{ fontSize: 12, color: C.mu, margin: "10px 0 0" }}>Tarjeta · Transferencia · Efectivo</p></div>
           <button onClick={function () { handleCheckout(); }} style={btnPrimary}>Pagar USD 9.99 — Acceso inmediato</button>

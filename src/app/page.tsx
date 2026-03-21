@@ -1,7 +1,7 @@
 "use client";
 
-import Fincheck from "@/components/Fincheck";
+import Fincheq from "@/components/Fincheq";
 
 export default function Home() {
-  return <Fincheck />;
+  return <Fincheq />;
 }

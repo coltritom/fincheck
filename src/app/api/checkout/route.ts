@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { diagnosticoId, email, nombre } = body;
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://fincheck-six.vercel.app";
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://Fincheq-six.vercel.app";
 
     const preference = new Preference(client);
 
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         items: [
           {
             id: "reporte-premium",
-            title: "Fincheck — Reporte Premium",
+            title: "Fincheq — Reporte Premium",
             description: "Diagnóstico financiero completo con plan de acción",
             quantity: 1,
             currency_id: "ARS",
