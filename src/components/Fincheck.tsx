@@ -109,7 +109,7 @@ export default function Fincheck() {
   const [diagId, setDiagId] = useState<string | null>(null);
   const tr = useRef<HTMLDivElement>(null);
 
-  useEffect(function () {
+useEffect(function () {
     var params = new URLSearchParams(window.location.search);
     var diagParam = params.get("diag");
     var pagoParam = params.get("pago");
@@ -136,6 +136,11 @@ export default function Fincheck() {
           setRes(result);
           if (pagoParam === "ok" || data.compro_premium) {
             setSc(5);
+            if (pagoParam === "ok") {
+              sendEmail("resultado_premium", data.email, data.nombre, data.score_final, data.rango, rangoLabels[data.rango] || data.rango, data.alertas_criticas || [], rangoColors[data.rango] || C.cy, data.scores_dimensiones, diagParam || undefined).then(function (ok) {
+                console.log("Email premium enviado:", ok);
+              });
+            }
           } else {
             setSc(3);
           }
@@ -347,6 +352,8 @@ export default function Fincheck() {
 
           <div style={cardStyle}><p style={{ fontSize: 11, fontWeight: 700, color: C.cy, margin: "0 0 10px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Tu acción prioritaria esta semana</p><div style={{ padding: "14px 16px", background: C.sl, borderRadius: 10, borderLeft: "3px solid " + C.cy }}><p style={{ fontSize: 14, color: C.ml, margin: 0, lineHeight: 1.65, fontWeight: 500 }}>{getPriorityAction(ds)}</p></div></div>
 
+          <button onClick={function () { window.open("/api/pdf?id=" + diagId + "&tipo=free", "_blank"); }} style={{ ...btnGhost, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>Descargar diagnóstico en PDF</button>
+
           {/* Upsell */}
           <div style={{ background: "linear-gradient(145deg," + C.sf + " 0%,#0A0A18 100%)", borderRadius: 16, padding: 28, border: "1px solid " + C.cyd, marginBottom: 16, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", top: 0, right: 0, width: 200, height: 200, background: "radial-gradient(circle at top right," + C.mg + "12,transparent 70%)", pointerEvents: "none" }} />
@@ -416,6 +423,8 @@ export default function Fincheck() {
           </div>
 
           <div style={cardStyle}><p style={{ fontSize: 11, fontWeight: 700, color: C.cy, margin: "0 0 14px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Estándares de referencia</p>{STANDARDS.map(function (st, i) { const ok = res.ds[st.dimKey] >= 7; return <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 0", borderBottom: i < 2 ? "1px solid " + C.bd : "none" }}><div><p style={{ fontSize: 13, fontWeight: 600, color: C.ic, margin: 0 }}>{st.l}</p><p style={{ fontSize: 11, color: C.mu, margin: "2px 0 0" }}>Buena práctica: {st.s}</p></div><span style={{ fontSize: 11, fontWeight: 700, color: ok ? C.gn : C.or }}>{ok ? "Dentro del rango" : "Por debajo"}</span></div>; })}</div>
+
+          <button onClick={function () { window.open("/api/pdf?id=" + diagId + "&tipo=premium", "_blank"); }} style={{ ...btnPrimary, marginBottom: 16, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>Descargar Reporte Premium en PDF</button>
 
           {/* CTA Consultora — white card */}
           <div style={{ background: "#FFFFFF", borderRadius: 16, padding: 24, border: "none", marginBottom: 16, position: "relative", overflow: "hidden" }}>
