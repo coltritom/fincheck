@@ -117,3 +117,33 @@ export async function marcarComoPremium(
     return false;
   }
 }
+
+// Cargar diagnóstico guardado por ID
+export async function loadDiagnostico(id: string): Promise<{
+  nombre: string;
+  email: string;
+  respuestas: Record<number, number>;
+  scores_dimensiones: Record<string, number>;
+  score_final: number;
+  rango: string;
+  alertas_criticas: string[];
+  compro_premium: boolean;
+} | null> {
+  try {
+    const { data, error } = await supabase
+      .from("diagnosticos")
+      .select("nombre, email, respuestas, scores_dimensiones, score_final, rango, alertas_criticas, compro_premium")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      console.error("Error cargando diagnóstico:", error);
+      return null;
+    }
+
+    return data;
+  } catch (err) {
+    console.error("Error cargando diagnóstico:", err);
+    return null;
+  }
+}

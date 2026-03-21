@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { C, QUESTIONS, DIMS, ACTION_PLANS, STANDARDS, UPSELL_FEATURES, CHECKOUT_FEATURES } from "@/lib/data";
 import { calcScores, getInterpretation, getPriorityAction, getAlertExplanation, getUrgencyLabel } from "@/lib/scoring";
 import type { ScoreResult } from "@/lib/scoring";
-import { saveDiagnostico } from "@/lib/actions";
+import { saveDiagnostico, loadDiagnostico } from "@/lib/actions";
 import ContactModal from "./ContactModal";
 import { sendEmail } from "@/lib/email";
 
@@ -108,6 +108,40 @@ export default function Fincheck() {
   const [modal, setModal] = useState(false);
   const [diagId, setDiagId] = useState<string | null>(null);
   const tr = useRef<HTMLDivElement>(null);
+
+useEffect(function () {
+    var params = new URLSearchParams(window.location.search);
+    var diagParam = params.get("diag");
+    if (diagParam) {
+      loadDiagnostico(diagParam).then(function (data) {
+        if (data) {
+          setNm(data.nombre);
+          setEm(data.email);
+          setDiagId(diagParam);
+          var rangoColors: Record<string, string> = {
+            critico: C.rd, fragil: C.or, inestable: C.yw, ordenado: C.cy, solido: C.gn
+          };
+          var rangoLabels: Record<string, string> = {
+            critico: "Crítico", fragil: "Frágil", inestable: "Inestable pero recuperable", ordenado: "Ordenado con alertas", solido: "Sólido"
+          };
+          var result = {
+            ds: data.scores_dimensiones,
+            fin: data.score_final,
+            al: data.alertas_criticas || [],
+            rg: data.rango,
+            co: rangoColors[data.rango] || C.cy,
+            lb: rangoLabels[data.rango] || data.rango,
+          };
+          setRes(result);
+          if (data.compro_premium) {
+            setSc(5);
+          } else {
+            setSc(3);
+          }
+        }
+      });
+    }
+  }, []);
 
   function go(s: number) { setFd(false); setTimeout(function () { setSc(s); setFd(true); }, 200); }
   useEffect(function () { if (tr.current) tr.current.scrollIntoView({ behavior: "smooth" }); }, [sc, cq]);
