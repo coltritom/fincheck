@@ -97,7 +97,7 @@ function DimBar({ l, v, sh }: { l: string; v: number; sh: boolean }) {
 
 // ═══ MAIN APP ═══
 
-export default function Fincheq() {
+export default function Fincheck() {
   const [sc, setSc] = useState(0);
   const [cq, setCq] = useState(0);
   const [ans, setAns] = useState<Record<number, number>>({});
