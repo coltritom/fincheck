@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "Fincheq <onboarding@resend.dev>",
+      from: "fincheq <onboarding@resend.dev>",
       to: [destinatario],
       subject: subject,
       html: html,
@@ -87,7 +87,7 @@ function wrap(content: string): string {
     + '<div style="max-width:520px;margin:0 auto;padding:32px 24px;">'
     + content
     + '<div style="border-top:1px solid #1A1A2E;padding-top:20px;margin-top:32px;text-align:center;">'
-    + '<p style="font-size:11px;color:#6B7194;margin:0;">Fincheq es una herramienta de <strong style="color:#cbfaff;">SECRITO Consulting</strong></p>'
+    + '<p style="font-size:11px;color:#6B7194;margin:0;">fincheq es una herramienta de <strong style="color:#cbfaff;">SECRITO Consulting</strong></p>'
     + '<p style="font-size:11px;color:#6B7194;margin:6px 0 0;">Diagnóstico financiero para pymes — fincheq.pro</p>'
     + '</div>'
     + '</div></body></html>';

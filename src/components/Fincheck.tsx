@@ -132,13 +132,13 @@ export default function Fincheck() {
     return (
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", display: "flex", alignItems: "center", justifyContent: "center" }}><PulseIcon /></div>
-        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "Fincheq"}</span>
+        <span style={{ fontSize: 15, fontWeight: 800, color: C.ic }}>{text || "fincheq"}</span>
       </div>
     );
   }
 
   function renderFooter() {
-    return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>Fincheq es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
+    return <div style={{ borderTop: "1px solid " + C.bd, padding: "20px 24px", textAlign: "center", position: "relative", zIndex: 1 }}><p style={{ fontSize: 11, color: C.mu, margin: 0 }}>fincheq es una herramienta de <strong style={{ color: C.ic }}>SECRITO Consulting</strong></p></div>;
   }
 
   function handleSubmitDiagnostico() {
@@ -212,7 +212,7 @@ export default function Fincheck() {
           <p style={{ fontSize: 13, color: C.ml, margin: 0, lineHeight: 1.6 }}>Basado en indicadores financieros reales. Diseñado por consultores especializados en pymes.</p>
         </div>
         <div style={cardStyle}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: C.cy, margin: "0 0 16px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Por qué confiar en Fincheq</p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: C.cy, margin: "0 0 16px", textTransform: "uppercase", letterSpacing: "0.08em" }}>Por qué confiar en fincheq</p>
           {["Basado en 7 indicadores financieros reales: liquidez, rentabilidad, cobranzas, endeudamiento, precios, orden y concentración", "Incluye sistema de alertas críticas con penalizaciones para que ningún problema grave quede oculto", "Desarrollado por SECRITO Consulting, consultora especializada en gestión financiera de pymes", "Tus datos son confidenciales y no se comparten con terceros"].map(function (t, i) {
             return <div key={i} style={{ display: "flex", gap: 10, marginBottom: i < 3 ? 14 : 0 }}><div style={{ minWidth: 20, height: 20, borderRadius: 6, background: C.cyg, border: "1px solid " + C.cyd, display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1 }}><CheckIcon c={C.cy} sz={11} /></div><span style={{ fontSize: 13, color: C.ml, lineHeight: 1.55 }}>{t}</span></div>;
           })}
@@ -340,7 +340,7 @@ export default function Fincheck() {
       <div style={{ padding: "40px 24px", position: "relative", zIndex: 1 }}>
         <div style={{ textAlign: "center", marginBottom: 32 }}><h2 style={{ fontSize: 24, fontWeight: 800, color: C.ic, margin: "0 0 8px" }}>Completá tu compra</h2><p style={{ fontSize: 15, color: C.mu, margin: 0 }}>Reporte Premium — Pago único</p></div>
         <div style={{ background: C.sf, borderRadius: 16, padding: 24, border: "1px solid " + C.cyd }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid " + C.bd }}><div><p style={{ fontSize: 15, fontWeight: 700, color: C.ic, margin: 0 }}>Reporte Premium</p><p style={{ fontSize: 13, color: C.mu, margin: "2px 0 0" }}>Fincheq</p></div><span style={{ fontSize: 24, fontWeight: 800, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>USD 9.99</span></div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid " + C.bd }}><div><p style={{ fontSize: 15, fontWeight: 700, color: C.ic, margin: 0 }}>Reporte Premium</p><p style={{ fontSize: 13, color: C.mu, margin: "2px 0 0" }}>fincheq</p></div><span style={{ fontSize: 24, fontWeight: 800, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>USD 9.99</span></div>
           <div style={{ fontSize: 13, color: C.mu, lineHeight: 1.7, marginBottom: 20 }}>{CHECKOUT_FEATURES.map(function (t, i) { return <p key={i} style={{ margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}><CheckIcon c={C.gn} sz={14} />{t}</p>; })}</div>
           <div style={{ padding: 20, background: C.sl, borderRadius: 12, textAlign: "center", marginBottom: 16, border: "1px solid " + C.bd }}><div style={{ display: "inline-flex", padding: "8px 20px", borderRadius: 8, background: "#009EE3" }}><span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>MercadoPago</span></div><p style={{ fontSize: 12, color: C.mu, margin: "10px 0 0" }}>Tarjeta · Transferencia · Efectivo</p></div>
           <button onClick={function () { handleCheckout(); }} style={btnPrimary}>Pagar USD 9.99 — Acceso inmediato</button>

@@ -9,11 +9,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Fincheq — Diagnóstico financiero para tu negocio",
+  title: "fincheq — Diagnóstico financiero para tu negocio",
   description:
     "Descubrí en 5 minutos si tu negocio está financieramente sano, en riesgo o en peligro. Sin planillas, sin contador, sin tecnicismos.",
   openGraph: {
-    title: "Fincheq — Diagnóstico financiero para tu negocio",
+    title: "fincheq — Diagnóstico financiero para tu negocio",
     description:
       "Respondé 14 preguntas simples y recibí un diagnóstico con score, alertas y recomendaciones. Gratis.",
     type: "website",
