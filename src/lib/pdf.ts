@@ -560,17 +560,18 @@ function addConsultoriaBlock(doc: jsPDF, y: number): number {
   doc.line(20, y, 190, y);
   y += 7;
 
-  doc.setFontSize(9);
+  doc.setFontSize(15);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(50, 50, 65);
   doc.text("¿Necesitás acompañamiento profesional?", 20, y);
   y += 5;
 
-  doc.setFontSize(8);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(130, 130, 150);
-  doc.text("Agendá una llamada gratuita de 15 minutos con SECRITO Consulting — fincheq.pro", 20, y);
-
+  doc.text("Agendá una llamada gratuita de 30 minutos con consultores especialistas en negocios, Te daremos asesoría en cuestiones financieras, contables y de procesos.", 20, y);
+  y += 5;
+  doc.text("Llená el formulario de la web o envianos un mail a secritoconsulting@gmail.com.", 20, y);
   return y + 8;
 }
 
