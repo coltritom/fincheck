@@ -157,6 +157,27 @@ export default function Fincheck() {
     go(3);
   }
 
+  function handleCheckout() {
+    fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ diagnosticoId: diagId, email: em, nombre: nm }),
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.init_point) {
+          window.location.href = data.init_point;
+        } else {
+          console.error("Error en checkout:", data);
+          alert("Hubo un error al procesar el pago. Intentá de nuevo.");
+        }
+      })
+      .catch(function (err) {
+        console.error("Error en checkout:", err);
+        alert("Hubo un error. Intentá de nuevo.");
+      });
+  }
+
   // ════════════════════════════
   // SCREEN 0: LANDING
   // ════════════════════════════
@@ -316,7 +337,7 @@ export default function Fincheck() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, paddingBottom: 16, borderBottom: "1px solid " + C.bd }}><div><p style={{ fontSize: 15, fontWeight: 700, color: C.ic, margin: 0 }}>Reporte Premium</p><p style={{ fontSize: 13, color: C.mu, margin: "2px 0 0" }}>Fincheck</p></div><span style={{ fontSize: 24, fontWeight: 800, background: "linear-gradient(135deg," + C.cy + "," + C.mg + ")", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>USD 9.99</span></div>
           <div style={{ fontSize: 13, color: C.mu, lineHeight: 1.7, marginBottom: 20 }}>{CHECKOUT_FEATURES.map(function (t, i) { return <p key={i} style={{ margin: "0 0 4px", display: "flex", alignItems: "center", gap: 8 }}><CheckIcon c={C.gn} sz={14} />{t}</p>; })}</div>
           <div style={{ padding: 20, background: C.sl, borderRadius: 12, textAlign: "center", marginBottom: 16, border: "1px solid " + C.bd }}><div style={{ display: "inline-flex", padding: "8px 20px", borderRadius: 8, background: "#009EE3" }}><span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>MercadoPago</span></div><p style={{ fontSize: 12, color: C.mu, margin: "10px 0 0" }}>Tarjeta · Transferencia · Efectivo</p></div>
-          <button onClick={function () { go(5); }} style={btnPrimary}>Pagar USD 9.99 — Acceso inmediato</button>
+          <button onClick={function () { handleCheckout(); }} style={btnPrimary}>Pagar USD 9.99 — Acceso inmediato</button>
         </div>
       </div>
     </div>
