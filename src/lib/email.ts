@@ -6,7 +6,8 @@ export async function sendEmail(
   rango: string,
   label: string,
   alertas: string[],
-  color: string
+  color: string,
+  dimScores?: Record<string, number>
 ): Promise<boolean> {
   try {
     const response = await fetch("/api/email", {
@@ -21,6 +22,7 @@ export async function sendEmail(
         label,
         alertas,
         color,
+        dimScores: dimScores || null,
       }),
     });
 
