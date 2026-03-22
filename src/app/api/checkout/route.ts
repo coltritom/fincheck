@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
           {
             id: "reporte-premium",
             title: "fincheq — Reporte Premium",
-            description: "Diagnóstico financiero completo con plan de acción",
+            description: "Reporte financiero",
             quantity: 1,
             currency_id: "ARS",
             unit_price: 14000,

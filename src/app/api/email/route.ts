@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         var freePdfBytes = generateFreePdf(pdfData);
         console.log("PDF generado, tamaño:", freePdfBytes.byteLength);
         attachments.push({
-          filename: "Fincheq-Diagnostico-" + nombre.replace(/\s+/g, "-") + ".pdf",
+          filename: "fincheq-Diagnostico-" + nombre.replace(/\s+/g, "-") + ".pdf",
           content: Buffer.from(freePdfBytes),
         });
       } catch (pdfErr) {
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
       try {
         var premPdfBytes = generatePremiumPdf(pdfData);
         attachments.push({
-          filename: "Fincheq-ReportePremium-" + nombre.replace(/\s+/g, "-") + ".pdf",
+          filename: "fincheq-ReportePremium-" + nombre.replace(/\s+/g, "-") + ".pdf",
           content: Buffer.from(premPdfBytes),
         });
       } catch (pdfErr) {
@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
       html: string;
       attachments?: Array<{ filename: string; content: Buffer }>;
     } = {
-      from: "Fincheq <hola@fincheq.pro>",
+      from: "fincheq <hola@fincheq.pro>",
       to: [destinatario],
       subject: subject,
       html: html,
@@ -144,7 +144,7 @@ function wrap(content: string): string {
     + '<div style="max-width:560px;margin:0 auto;padding:32px 24px;">'
     + content
     + '<div style="border-top:1px solid #1A1A2E;padding-top:24px;margin-top:36px;text-align:center;">'
-    + '<p style="font-size:11px;color:#6B7194;margin:0;">Fincheq es una herramienta de <strong style="color:#cbfaff;">SECRITO Consulting</strong></p>'
+    + '<p style="font-size:11px;color:#6B7194;margin:0;">fincheq es una herramienta de <strong style="color:#cbfaff;">SECRITO Consulting</strong></p>'
     + '<p style="font-size:11px;color:#6B7194;margin:6px 0 0;"><a href="https://fincheq.pro" style="color:#008efe;text-decoration:none;">fincheq.pro</a></p>'
     + '</div>'
     + '</div></body></html>';

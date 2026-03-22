@@ -46,10 +46,10 @@ export async function GET(req: NextRequest) {
 
     if (tipo === "premium") {
       pdfBytes = generatePremiumPdf(pdfData);
-      filename = "Fincheq-ReportePremium-" + data.nombre.replace(/\s+/g, "-") + ".pdf";
+      filename = "fincheq-ReportePremium-" + data.nombre.replace(/\s+/g, "-") + ".pdf";
     } else {
       pdfBytes = generateFreePdf(pdfData);
-      filename = "Fincheq-Diagnostico-" + data.nombre.replace(/\s+/g, "-") + ".pdf";
+      filename = "fincheq-Diagnostico-" + data.nombre.replace(/\s+/g, "-") + ".pdf";
     }
 
     return new NextResponse(Buffer.from(pdfBytes), {

@@ -584,7 +584,7 @@ function addFooter(doc: jsPDF) {
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(170, 170, 185);
-    doc.text("Fincheq — SECRITO Consulting — fincheq.pro", 105, 288, { align: "center" });
+    doc.text("fincheq — SECRITO Consulting — fincheq.pro", 105, 288, { align: "center" });
     doc.text("Página " + p + " de " + pageCount, 188, 288, { align: "right" });
   }
 }
